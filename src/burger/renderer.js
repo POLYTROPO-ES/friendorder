@@ -129,6 +129,39 @@ function drawPlate(ctx) {
   ctx.stroke();
 }
 
+function drawToppingGlyph(ctx, topping, x, y) {
+  if (topping.id === 'bacon' || topping.id === 'panceta') {
+    const w = 30;
+    const h = 14;
+    ctx.fillStyle = topping.color;
+    roundRect(ctx, x - w / 2, y - h / 2, w, h, 5);
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(0,0,0,0.3)';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+    if (topping.id === 'bacon') {
+      // red crispy bacon with white fat streaks
+      ctx.strokeStyle = 'rgba(255,255,255,0.75)';
+      ctx.beginPath();
+      ctx.moveTo(x - w / 2 + 6, y - 3);
+      ctx.lineTo(x + w / 2 - 6, y - 3);
+      ctx.moveTo(x - w / 2 + 6, y + 3);
+      ctx.lineTo(x + w / 2 - 6, y + 3);
+      ctx.stroke();
+    } else {
+      // white panceta with a thin meat streak
+      ctx.strokeStyle = 'rgba(190, 30, 30, 0.7)';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(x - w / 2 + 5, y);
+      ctx.lineTo(x + w / 2 - 5, y);
+      ctx.stroke();
+    }
+    return;
+  }
+  ctx.fillText(topping.emoji, x, y);
+}
+
 function drawToppingIcons(ctx, toppings) {
   const fontSize = toppings.length > 14 ? 20 : toppings.length > 10 ? 24 : 30;
   const step = toppings.length > 14 ? 28 : toppings.length > 10 ? 32 : 40;
@@ -144,7 +177,7 @@ function drawToppingIcons(ctx, toppings) {
   rows.forEach((row, ri) => {
     const startX = CX - (step * (row.length - 1)) / 2;
     row.forEach((topping, i) => {
-      ctx.fillText(topping.emoji, startX + i * step, baseY + ri * (fontSize + 9));
+      drawToppingGlyph(ctx, topping, startX + i * step, baseY + ri * (fontSize + 9));
     });
   });
 }
@@ -161,7 +194,7 @@ function drawToppingsAside(ctx, toppings) {
   const startY = 480 - ((Math.max(left.length, right.length) - 1) * spacing) / 2;
   [[left, 100], [right, 380]].forEach(([group, x]) => {
     group.forEach((topping, i) => {
-      ctx.fillText(topping.emoji, x, startY + i * spacing);
+      drawToppingGlyph(ctx, topping, x, startY + i * spacing);
     });
   });
 }
@@ -198,8 +231,15 @@ export function renderBurger(canvas, state, toppings) {
 
   const hasBread = state.bread !== 'none';
   const selected = toppings.filter((t) => state.toppings.includes(t.id));
-  const cheeses = selected.filter((t) => t.id === 'dobleQueso' || t.id === 'tripleQueso');
-  const iconToppings = selected.filter((t) => t.id !== 'dobleQueso' && t.id !== 'tripleQueso');
+  const modeFor = (category) =>
+    state.toppingsAparte ? 'aside' : (state.serve && state.serve[category]) || 'inside';
+  const insideCheeses = selected.filter(
+    (t) => (t.id === 'dobleQueso' || t.id === 'tripleQueso') && modeFor('extra') === 'inside'
+  );
+  const insideIcons = selected.filter(
+    (t) => t.id !== 'dobleQueso' && t.id !== 'tripleQueso' && modeFor(t.category) === 'inside'
+  );
+  const asideIcons = selected.filter((t) => modeFor(t.category) === 'aside');
 
   drawPlate(ctx);
 
@@ -209,17 +249,16 @@ export function renderBurger(canvas, state, toppings) {
 
   drawPatties(ctx, state.patties, MEAT_COLORS[state.meatPoint] || MEAT_COLORS.alPunto);
 
-  if (state.toppingsAparte) {
-    if (selected.length > 0) {
-      drawToppingsAside(ctx, selected);
-    }
-  } else {
-    if (cheeses.length > 0) {
-      drawCheese(ctx, cheeses.length);
-    }
-    if (iconToppings.length > 0) {
-      drawToppingIcons(ctx, iconToppings);
-    }
+  if (insideCheeses.length > 0) {
+    drawCheese(ctx, insideCheeses.length);
+  }
+
+  if (insideIcons.length > 0) {
+    drawToppingIcons(ctx, insideIcons);
+  }
+
+  if (asideIcons.length > 0) {
+    drawToppingsAside(ctx, asideIcons);
   }
 
   if (hasBread) {

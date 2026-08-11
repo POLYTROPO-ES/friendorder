@@ -9,6 +9,7 @@ export const DEFAULT_STATE = {
   meatPoint: 'alPunto',
   toppings: [],
   toppingsAparte: false,
+  serve: { veggie: 'inside', extra: 'inside', sauce: 'inside' },
   name: '',
   updatedAt: null,
   language: 'es',
@@ -26,6 +27,12 @@ export function normalizeState(raw) {
   state.patties = Number.isFinite(patties) ? Math.min(4, Math.max(1, Math.round(patties))) : DEFAULT_STATE.patties;
   state.grilledBread = Boolean(state.grilledBread);
   state.toppingsAparte = Boolean(state.toppingsAparte);
+  const serve = state.serve && typeof state.serve === 'object' ? state.serve : {};
+  state.serve = {
+    veggie: serve.veggie === 'aside' ? 'aside' : 'inside',
+    extra: serve.extra === 'aside' ? 'aside' : 'inside',
+    sauce: serve.sauce === 'aside' ? 'aside' : 'inside',
+  };
   if (state.bread === 'none') {
     state.grilledBread = false;
   }

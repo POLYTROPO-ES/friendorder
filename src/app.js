@@ -134,6 +134,7 @@ export function initApp() {
 
   function renderToppings() {
     const categories = ['veggie', 'extra', 'sauce'];
+    const forced = state.toppingsAparte;
     toppingsEl.innerHTML = categories
       .map((category) => {
         const items = toppings.filter((t) => t.category === category);
@@ -144,15 +145,13 @@ export function initApp() {
               <span class="t-emoji">${t.emoji}</span>${t.name[state.language]}</button>`;
           })
           .join('');
-        const head =
-          category === 'extra'
-            ? `<div class="group-head"><h3>${i18n.dict.categoryOptions[category]}</h3>
-                <select id="serve-mode" class="serve-select" aria-label="${i18n.t('serveTitle')}">
-                  <option value="inside" ${state.toppingsAparte ? '' : 'selected'}>${i18n.dict.serveInside}</option>
-                  <option value="aside" ${state.toppingsAparte ? 'selected' : ''}>${i18n.dict.serveAside}</option>
-                </select>
-              </div>`
-            : `<h3>${i18n.dict.categoryOptions[category]}</h3>`;
+        const effective = forced ? 'aside' : state.serve[category];
+        const head = `<div class="group-head"><h3>${i18n.dict.categoryOptions[category]}</h3>
+            <select data-serve-cat="${category}" class="serve-select" aria-label="${i18n.t('serveTitle')}" ${forced ? 'disabled' : ''}>
+              <option value="inside" ${effective === 'inside' ? 'selected' : ''}>${i18n.dict.serveInside}</option>
+              <option value="aside" ${effective === 'aside' ? 'selected' : ''}>${i18n.dict.serveAside}</option>
+            </select>
+          </div>`;
         return `<div class="group">${head}<div class="topping-grid">${chips}</div></div>`;
       })
       .join('');
@@ -169,14 +168,13 @@ export function initApp() {
         renderAll();
       });
     });
-    const serveSelect = toppingsEl.querySelector('#serve-mode');
-    if (serveSelect) {
-      serveSelect.addEventListener('change', () => {
-        state.toppingsAparte = serveSelect.value === 'aside';
+    toppingsEl.querySelectorAll('select[data-serve-cat]').forEach((sel) => {
+      sel.addEventListener('change', () => {
+        state.serve[sel.dataset.serveCat] = sel.value;
         persist();
         renderAll();
       });
-    }
+    });
   }
 
   function buildSummaryParts() {
