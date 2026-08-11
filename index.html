@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="FriendOrder — a fresh project placeholder." />
+    <meta name="theme-color" content="#0f766e" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>FriendOrder</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        font-family: 'Segoe UI', Tahoma, system-ui, sans-serif;
+        background: #f4f7f2;
+        color: #1f2937;
+      }
+      @media (prefers-color-scheme: dark) {
+        body {
+          background: #0f172a;
+          color: #e2e8f0;
+        }
+      }
+      .shell {
+        text-align: center;
+        padding: 2rem;
+        max-width: 32rem;
+      }
+      .logo {
+        width: 64px;
+        height: 64px;
+      }
+      h1 {
+        margin: 0.75rem 0 0.25rem;
+        font-size: 2rem;
+      }
+      .tagline {
+        margin: 0 0 1rem;
+        opacity: 0.8;
+      }
+      .hint {
+        font-size: 0.9rem;
+        opacity: 0.7;
+      }
+      code {
+        background: rgba(128, 128, 128, 0.15);
+        padding: 0.1rem 0.35rem;
+        border-radius: 4px;
+      }
+      footer {
+        margin-top: 2rem;
+        font-size: 0.8rem;
+        opacity: 0.5;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <img class="logo" src="/favicon.svg" alt="FriendOrder" />
+      <h1>FriendOrder</h1>
+      <p class="tagline">A fresh start.</p>
+      <p class="hint">Edit <code>index.html</code> to build your page, then deploy with <code>npm run deploy:cf</code>.</p>
+      <footer><span id="version"></span></footer>
+    </main>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
