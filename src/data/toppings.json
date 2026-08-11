@@ -19,7 +19,7 @@
   { "id": "huevoFrito", "name": { "es": "Huevo frito", "en": "Fried egg" }, "category": "extra", "emoji": "🍳", "color": "#ffd54f" },
   { "id": "dobleQueso", "name": { "es": "Doble de queso", "en": "Double cheese" }, "category": "extra", "emoji": "🧀", "color": "#ffca28" },
   { "id": "tripleQueso", "name": { "es": "Triple de queso", "en": "Triple cheese" }, "category": "extra", "emoji": "🧀", "color": "#ffb300" },
-  { "id": "queson", "name": { "es": "Quesón", "en": "Big cheese" }, "category": "extra", "emoji": "🧀", "color": "#ffca28" },
+  { "id": "queson", "name": { "es": "Queso", "en": "Cheese" }, "category": "extra", "emoji": "🧀", "color": "#ffca28" },
   { "id": "ketchup", "name": { "es": "Kétchup", "en": "Ketchup" }, "category": "sauce", "emoji": "🍅", "color": "#d32f2f" },
   { "id": "mostaza", "name": { "es": "Mostaza", "en": "Mustard" }, "category": "sauce", "emoji": "🟡", "color": "#fdd835" },
   { "id": "mayonesa", "name": { "es": "Mayonesa", "en": "Mayonnaise" }, "category": "sauce", "emoji": "🥚", "color": "#fff59d" },
