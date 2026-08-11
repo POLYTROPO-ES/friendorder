@@ -1,6 +1,6 @@
 export const BREAD_OPTIONS = ['none', 'normal', 'glutenFree'];
 export const PATTY_OPTIONS = [1, 2, 3, 4];
-export const MEAT_POINTS = ['crudo', 'pocoHecho', 'alPunto', 'hecho', 'muyHecho', 'especialCasa'];
+export const MEAT_POINTS = ['pocoHecho', 'alPunto', 'hecho', 'muyHecho', 'especialCasa'];
 
 export const DEFAULT_STATE = {
   bread: 'normal',
@@ -8,6 +8,7 @@ export const DEFAULT_STATE = {
   patties: 1,
   meatPoint: 'alPunto',
   toppings: [],
+  toppingsAparte: false,
   name: '',
   updatedAt: null,
   language: 'es',
@@ -24,6 +25,7 @@ export function normalizeState(raw) {
   const patties = Number(state.patties);
   state.patties = Number.isFinite(patties) ? Math.min(4, Math.max(1, Math.round(patties))) : DEFAULT_STATE.patties;
   state.grilledBread = Boolean(state.grilledBread);
+  state.toppingsAparte = Boolean(state.toppingsAparte);
   if (state.bread === 'none') {
     state.grilledBread = false;
   }

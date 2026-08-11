@@ -33,6 +33,7 @@ export function initApp() {
   const toastEl = $('toast');
   const nameInput = $('order-name');
   const orderDateEl = $('order-date');
+  const toppingsAsideToggle = $('toppings-aside-toggle');
 
   const toppingById = new Map(toppings.map((t) => [t.id, t]));
 
@@ -96,6 +97,7 @@ export function initApp() {
     });
     grillWrap.hidden = state.bread === 'none';
     grillToggle.checked = state.grilledBread;
+    toppingsAsideToggle.checked = state.toppingsAparte;
   }
 
   function renderPatties() {
@@ -142,7 +144,16 @@ export function initApp() {
               <span class="t-emoji">${t.emoji}</span>${t.name[state.language]}</button>`;
           })
           .join('');
-        return `<div class="group"><h3>${i18n.dict.categoryOptions[category]}</h3><div class="topping-grid">${chips}</div></div>`;
+        const head =
+          category === 'extra'
+            ? `<div class="group-head"><h3>${i18n.dict.categoryOptions[category]}</h3>
+                <select id="serve-mode" class="serve-select" aria-label="${i18n.t('serveTitle')}">
+                  <option value="inside" ${state.toppingsAparte ? '' : 'selected'}>${i18n.dict.serveInside}</option>
+                  <option value="aside" ${state.toppingsAparte ? 'selected' : ''}>${i18n.dict.serveAside}</option>
+                </select>
+              </div>`
+            : `<h3>${i18n.dict.categoryOptions[category]}</h3>`;
+        return `<div class="group">${head}<div class="topping-grid">${chips}</div></div>`;
       })
       .join('');
     toppingsEl.querySelectorAll('button[data-topping]').forEach((btn) => {
@@ -158,6 +169,14 @@ export function initApp() {
         renderAll();
       });
     });
+    const serveSelect = toppingsEl.querySelector('#serve-mode');
+    if (serveSelect) {
+      serveSelect.addEventListener('change', () => {
+        state.toppingsAparte = serveSelect.value === 'aside';
+        persist();
+        renderAll();
+      });
+    }
   }
 
   function buildSummaryParts() {
@@ -241,6 +260,12 @@ export function initApp() {
     persist();
     renderSummary();
     renderDate();
+  });
+
+  toppingsAsideToggle.addEventListener('change', () => {
+    state.toppingsAparte = toppingsAsideToggle.checked;
+    persist();
+    renderAll();
   });
 
   grillToggle.addEventListener('change', () => {

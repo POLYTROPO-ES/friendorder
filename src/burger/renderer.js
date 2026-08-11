@@ -149,33 +149,21 @@ function drawToppingIcons(ctx, toppings) {
   });
 }
 
-function drawLettuceWrap(ctx) {
-  // base leaf
-  ctx.fillStyle = '#66bb6a';
-  ctx.beginPath();
-  ctx.ellipse(CX, 452, 165, 24, 0, 0, Math.PI);
-  ctx.fill();
-  // left leaf
-  ctx.beginPath();
-  ctx.moveTo(CX - 142, 440);
-  ctx.quadraticCurveTo(CX - 178, 330, CX - 122, 242);
-  ctx.quadraticCurveTo(CX - 92, 252, CX - 96, 360);
-  ctx.closePath();
-  ctx.fill();
-  // right leaf
-  ctx.beginPath();
-  ctx.moveTo(CX + 142, 440);
-  ctx.quadraticCurveTo(CX + 178, 330, CX + 122, 242);
-  ctx.quadraticCurveTo(CX + 92, 252, CX + 96, 360);
-  ctx.closePath();
-  ctx.fill();
-  ctx.fillStyle = '#2e7d32';
-  ctx.beginPath();
-  ctx.ellipse(CX - 122, 246, 12, 6, -0.4, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.beginPath();
-  ctx.ellipse(CX + 122, 246, 12, 6, 0.4, 0, Math.PI * 2);
-  ctx.fill();
+function drawToppingsAside(ctx, toppings) {
+  const fontSize = toppings.length > 8 ? 22 : 26;
+  ctx.font = `${fontSize}px "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  const half = Math.ceil(toppings.length / 2);
+  const left = toppings.slice(0, half);
+  const right = toppings.slice(half);
+  const spacing = fontSize + 8;
+  const startY = 480 - ((Math.max(left.length, right.length) - 1) * spacing) / 2;
+  [[left, 100], [right, 380]].forEach(([group, x]) => {
+    group.forEach((topping, i) => {
+      ctx.fillText(topping.emoji, x, startY + i * spacing);
+    });
+  });
 }
 
 function drawHouseSpecialStar(ctx) {
@@ -221,18 +209,21 @@ export function renderBurger(canvas, state, toppings) {
 
   drawPatties(ctx, state.patties, MEAT_COLORS[state.meatPoint] || MEAT_COLORS.alPunto);
 
-  if (cheeses.length > 0) {
-    drawCheese(ctx, cheeses.length);
-  }
-
-  if (iconToppings.length > 0) {
-    drawToppingIcons(ctx, iconToppings);
+  if (state.toppingsAparte) {
+    if (selected.length > 0) {
+      drawToppingsAside(ctx, selected);
+    }
+  } else {
+    if (cheeses.length > 0) {
+      drawCheese(ctx, cheeses.length);
+    }
+    if (iconToppings.length > 0) {
+      drawToppingIcons(ctx, iconToppings);
+    }
   }
 
   if (hasBread) {
     drawTopBun(ctx, state.bread, state.grilledBread);
-  } else {
-    drawLettuceWrap(ctx);
   }
 
   if (state.meatPoint === 'especialCasa') {

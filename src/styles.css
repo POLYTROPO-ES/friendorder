@@ -295,6 +295,34 @@ button {
   color: var(--muted);
 }
 
+.group-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.55rem;
+}
+
+.group-head h3 {
+  margin: 0;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+
+.serve-select {
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.3rem 0.5rem;
+  border-radius: 8px;
+  border: 2px solid #ffcc80;
+  background: #fff8f0;
+  color: inherit;
+  cursor: pointer;
+}
+
 .topping-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
