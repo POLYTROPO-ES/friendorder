@@ -114,24 +114,24 @@ function drawCheese(ctx, count) {
   }
 }
 
-function drawSauces(ctx, sauces) {
-  ctx.lineWidth = 7;
-  ctx.lineCap = 'round';
-  sauces.forEach((sauce, i) => {
-    const y = 286 + (i % 2) * 9;
-    ctx.strokeStyle = sauce.color;
-    ctx.beginPath();
-    ctx.moveTo(CX - 130, y);
-    ctx.quadraticCurveTo(CX - 60, y - 10, CX, y);
-    ctx.quadraticCurveTo(CX + 60, y + 10, CX + 130, y);
-    ctx.stroke();
-  });
+function drawPlate(ctx) {
+  ctx.fillStyle = '#ffffff';
+  ctx.beginPath();
+  ctx.ellipse(CX, 505, 215, 48, 0, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.strokeStyle = '#e3e3e3';
+  ctx.lineWidth = 3;
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.ellipse(CX, 502, 182, 38, 0, 0, Math.PI * 2);
+  ctx.strokeStyle = '#ececec';
+  ctx.lineWidth = 2;
+  ctx.stroke();
 }
 
 function drawToppingIcons(ctx, toppings) {
-  const many = toppings.length > 10;
-  const fontSize = many ? 24 : 30;
-  const step = many ? 32 : 40;
+  const fontSize = toppings.length > 14 ? 20 : toppings.length > 10 ? 24 : 30;
+  const step = toppings.length > 14 ? 28 : toppings.length > 10 ? 32 : 40;
   const maxPerRow = Math.max(1, Math.floor(310 / step));
   ctx.font = `${fontSize}px "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif`;
   ctx.textAlign = 'center';
@@ -140,11 +140,11 @@ function drawToppingIcons(ctx, toppings) {
   for (let i = 0; i < toppings.length; i += maxPerRow) {
     rows.push(toppings.slice(i, i + maxPerRow));
   }
-  const baseY = rows.length > 1 ? 230 : 246;
+  const baseY = rows.length > 1 ? 232 : 246;
   rows.forEach((row, ri) => {
     const startX = CX - (step * (row.length - 1)) / 2;
     row.forEach((topping, i) => {
-      ctx.fillText(topping.emoji, startX + i * step, baseY + ri * (fontSize + 10));
+      ctx.fillText(topping.emoji, startX + i * step, baseY + ri * (fontSize + 9));
     });
   });
 }
@@ -211,8 +211,9 @@ export function renderBurger(canvas, state, toppings) {
   const hasBread = state.bread !== 'none';
   const selected = toppings.filter((t) => state.toppings.includes(t.id));
   const cheeses = selected.filter((t) => t.id === 'dobleQueso' || t.id === 'tripleQueso');
-  const sauces = selected.filter((t) => t.category === 'sauce');
-  const iconToppings = selected.filter((t) => t.category !== 'sauce');
+  const iconToppings = selected.filter((t) => t.id !== 'dobleQueso' && t.id !== 'tripleQueso');
+
+  drawPlate(ctx);
 
   if (hasBread) {
     drawBottomBun(ctx, state.bread);
@@ -222,10 +223,6 @@ export function renderBurger(canvas, state, toppings) {
 
   if (cheeses.length > 0) {
     drawCheese(ctx, cheeses.length);
-  }
-
-  if (sauces.length > 0) {
-    drawSauces(ctx, sauces);
   }
 
   if (iconToppings.length > 0) {
