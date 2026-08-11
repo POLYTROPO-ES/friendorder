@@ -167,6 +167,26 @@ function drawCourgetteGlyph(ctx, x, y) {
   });
 }
 
+function drawCheeseSliceGlyph(ctx, x, y) {
+  ctx.fillStyle = '#ffca28';
+  ctx.beginPath();
+  ctx.moveTo(x - 11, y + 9);
+  ctx.lineTo(x - 3, y - 11);
+  ctx.lineTo(x + 11, y - 4);
+  ctx.lineTo(x + 6, y + 9);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(0,0,0,0.2)';
+  ctx.lineWidth = 1;
+  ctx.stroke();
+  ctx.fillStyle = '#f5a800';
+  [[-1, -2], [6, 2], [-6, 4]].forEach(([dx, dy]) => {
+    ctx.beginPath();
+    ctx.arc(x + dx, y + dy, 2, 0, Math.PI * 2);
+    ctx.fill();
+  });
+}
+
 function drawToppingGlyph(ctx, topping, x, y) {
   if (topping.id === 'bacon' || topping.id === 'panceta') {
     const w = 30;
@@ -207,6 +227,10 @@ function drawToppingGlyph(ctx, topping, x, y) {
   }
   if (topping.id === 'calabacinPlancha') {
     drawCourgetteGlyph(ctx, x, y);
+    return;
+  }
+  if (topping.id === 'queson') {
+    drawCheeseSliceGlyph(ctx, x, y);
     return;
   }
   ctx.fillText(topping.emoji, x, y);
