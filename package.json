@@ -9,20 +9,27 @@
     "prebuild": "node scripts/generate-version.mjs",
     "build": "vite build",
     "preview": "vite preview",
+    "dev:cf": "wrangler pages dev dist --port 8788",
+    "db:migrate": "wrangler d1 execute friendorder --file=migrations/0001_create_users.sql --remote",
+    "db:migrate:local": "wrangler d1 execute friendorder --file=migrations/0001_create_users.sql --local",
     "pretest": "node scripts/generate-version.mjs",
     "test": "vitest",
     "pretest:run": "node scripts/generate-version.mjs",
     "test:run": "vitest run",
     "pretest:e2e": "node scripts/generate-version.mjs",
     "test:e2e": "playwright test",
-    "deploy:cf": "npm run build && node scripts/prepare-pages-redirects.mjs && npx wrangler pages deploy dist --project-name friendorder",
+    "deploy:cf": "npm run build && node scripts/prepare-pages-redirects.mjs && npx wrangler pages deploy dist --project-name friendorder --functions functions",
     "deploy:worker": "npm run build && npx wrangler deploy",
     "docker:build": "docker build -t friendorder:latest .",
     "docker:run": "docker run --rm -p 8080:80 friendorder:latest"
   },
+  "dependencies": {
+    "jose": "^6.0.0"
+  },
   "devDependencies": {
     "@playwright/test": "^1.58.2",
     "vite": "^6.3.0",
-    "vitest": "^3.2.4"
+    "vitest": "^3.2.4",
+    "wrangler": "^4.76.0"
   }
 }

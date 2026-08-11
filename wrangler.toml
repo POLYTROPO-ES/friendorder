@@ -8,3 +8,10 @@ not_found_handling = "single-page-application"
 
 [vars]
 APP_ENV = "production"
+TEAM_DOMAIN = "https://<your-team>.cloudflareaccess.com"
+POLICY_AUD = "<your-access-application-aud>"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "friendorder"
+database_id = "00000000-0000-0000-0000-000000000000"
