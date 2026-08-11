@@ -324,7 +324,11 @@ export function renderBurger(canvas, state, toppings) {
   drawPatties(ctx, state.patties, MEAT_COLORS[state.meatPoint] || MEAT_COLORS.alPunto);
 
   if (insideCheeses.length > 0) {
-    drawCheese(ctx, insideCheeses.length);
+    const cheeseLayers = insideCheeses.reduce(
+      (sum, t) => sum + (t.id === 'dobleQueso' ? 2 : t.id === 'tripleQueso' ? 3 : 1),
+      0
+    );
+    drawCheese(ctx, cheeseLayers);
   }
 
   if (insideIcons.length > 0) {
