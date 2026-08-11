@@ -62,3 +62,7 @@ All toppings live in [`src/data/toppings.json`](src/data/toppings.json). Each it
 ## Authentication (on hold)
 
 The repo contains a Cloudflare Access + D1 user-management backend (`functions/`, `migrations/`, [docs/AuthCloudflareAccess.md](docs/AuthCloudflareAccess.md)), but it is **not active** — the burger app is local-only for now. To enable Google login and `admin`/`user` roles later, follow the setup guide and wire the frontend to `/api/me`.
+
+## AI Disclaimer
+
+This project's code was generated with the assistance of different large language model (LLM) tools. It may contain AI-generated code, text, and assets.
