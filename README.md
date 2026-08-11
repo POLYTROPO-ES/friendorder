@@ -25,6 +25,7 @@ FriendOrder is a fresh project placeholder. It ships with a minimal landing page
 
 ## Deployment (Cloudflare)
 
+- Production URL: [https://friendorder.tinkertask.com/](https://friendorder.tinkertask.com/)
 - Cloudflare Pages: `npm run deploy:cf`
 - Cloudflare Worker with static assets: `npm run deploy:worker`
 - Wrangler config lives in [wrangler.toml](wrangler.toml) and the Worker entry in [cloudflare/worker-static-proxy.js](cloudflare/worker-static-proxy.js)
