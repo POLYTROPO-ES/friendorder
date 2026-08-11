@@ -54,6 +54,10 @@ export function initApp() {
   const nameInput = $('order-name');
   const orderDateEl = $('order-date');
   const toppingsAsideToggle = $('toppings-aside-toggle');
+  const conflictDialog = $('serve-conflict');
+  const conflictMessage = $('conflict-message');
+  const conflictInsideBtn = $('conflict-inside');
+  const conflictKeepBtn = $('conflict-keep');
 
   const toppingById = new Map(toppings.map((t) => [t.id, t]));
 
@@ -171,7 +175,7 @@ export function initApp() {
           .join('');
         const effective = forced ? 'aside' : state.serve[category];
         const head = `<div class="group-head"><h3>${i18n.dict.categoryOptions[category]}</h3>
-            <select data-serve-cat="${category}" class="serve-select" aria-label="${i18n.t('serveTitle')}" ${forced ? 'disabled' : ''}>
+            <select data-serve-cat="${category}" class="serve-select" aria-label="${i18n.t('serveTitle')}">
               <option value="inside" ${effective === 'inside' ? 'selected' : ''}>${i18n.dict.serveInside}</option>
               <option value="aside" ${effective === 'aside' ? 'selected' : ''}>${i18n.dict.serveAside}</option>
             </select>
@@ -194,11 +198,27 @@ export function initApp() {
     });
     toppingsEl.querySelectorAll('select[data-serve-cat]').forEach((sel) => {
       sel.addEventListener('change', () => {
-        state.serve[sel.dataset.serveCat] = sel.value;
+        const category = sel.dataset.serveCat;
+        const value = sel.value;
+        if (state.toppingsAparte && value === 'inside') {
+          askServeConflict(category);
+          return;
+        }
+        state.serve[category] = value;
         persist();
         renderAll();
       });
     });
+  }
+
+  let conflictCategory = null;
+  function askServeConflict(category) {
+    conflictCategory = category;
+    const catLabel = i18n.dict.categoryOptions[category] || category;
+    conflictMessage.textContent = i18n.t('serveConflictMessage');
+    conflictInsideBtn.textContent = `${i18n.t('serveConflictInside')} ${catLabel} ${i18n.t('serveInside')}`;
+    conflictKeepBtn.textContent = i18n.t('serveConflictKeep');
+    conflictDialog.showModal();
   }
 
   function buildSummaryParts() {
@@ -340,6 +360,23 @@ export function initApp() {
     i18n = createI18n(state.language);
     renderAll();
     toast(i18n.t('deleted'));
+  });
+
+  conflictInsideBtn.addEventListener('click', () => {
+    conflictDialog.close();
+    state.toppingsAparte = false;
+    if (conflictCategory) {
+      state.serve[conflictCategory] = 'inside';
+    }
+    persist();
+    renderAll();
+  });
+  conflictKeepBtn.addEventListener('click', () => {
+    conflictDialog.close();
+    renderAll();
+  });
+  conflictDialog.addEventListener('cancel', () => {
+    renderAll();
   });
 
   $('btn-download').addEventListener('click', () => {
