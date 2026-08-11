@@ -1,0 +1,369 @@
+:root {
+  color-scheme: light;
+  --bg-a: #ff9a3c;
+  --bg-b: #ff5722;
+  --card: #ffffff;
+  --ink: #2d2a26;
+  --muted: #8a837a;
+  --accent: #ff5722;
+  --accent-2: #ffc107;
+  --green: #43a047;
+  --danger: #c62828;
+  --radius: 18px;
+  --shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: 'Segoe UI', system-ui, -apple-system, Tahoma, sans-serif;
+  background: linear-gradient(160deg, var(--bg-a), var(--bg-b));
+  background-attachment: fixed;
+  color: var(--ink);
+  padding-bottom: 96px;
+}
+
+button {
+  font: inherit;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ---------- Top bar ---------- */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  box-shadow: var(--shadow);
+}
+
+.brand {
+  margin: 0;
+  font-size: 1.25rem;
+  letter-spacing: 0.01em;
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.pill {
+  min-width: 2.5rem;
+  height: 2.5rem;
+  padding: 0 0.9rem;
+  border-radius: 999px;
+  background: #fff;
+  border: 2px solid #ffe0b2;
+  font-weight: 600;
+}
+
+.pill:active {
+  transform: scale(0.96);
+}
+
+.menu {
+  position: relative;
+}
+
+.menu-pop {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.5rem);
+  min-width: 12rem;
+  background: var(--card);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  z-index: 30;
+}
+
+.menu-pop button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 0.8rem 1rem;
+  background: transparent;
+}
+
+.menu-pop button:hover {
+  background: #fff3e0;
+}
+
+.menu-pop button.danger {
+  color: var(--danger);
+}
+
+/* ---------- Content ---------- */
+.content {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 1rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 1.1rem;
+  box-shadow: var(--shadow);
+}
+
+.card h2 {
+  margin: 0 0 0.85rem;
+  font-size: 1.05rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+/* ---------- Preview ---------- */
+.preview-card {
+  text-align: center;
+}
+
+.preview-wrap {
+  display: grid;
+  place-items: center;
+}
+
+.preview-wrap canvas {
+  max-width: 100%;
+  height: auto;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #fff8e1, #fff3d6);
+}
+
+.summary {
+  margin: 0.85rem 0 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+/* ---------- Segmented (bread) ---------- */
+.segmented {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+
+.segmented button {
+  padding: 0.85rem 0.5rem;
+  border-radius: 12px;
+  background: #fff3e0;
+  border: 2px solid transparent;
+  font-weight: 600;
+}
+
+.segmented button.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: #e64a19;
+}
+
+.grill-wrap {
+  margin-top: 0.85rem;
+}
+
+.switch-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.7rem 0.9rem;
+  border-radius: 12px;
+  background: #fff8f0;
+  border: 2px dashed #ffcc80;
+}
+
+.switch-row input {
+  width: 52px;
+  height: 28px;
+  accent-color: var(--accent);
+}
+
+/* ---------- Stepper (patties) ---------- */
+.stepper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.stepper button {
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.stepper button:disabled {
+  opacity: 0.35;
+}
+
+.stepper .value {
+  min-width: 4.5rem;
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.stepper .value small {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+/* ---------- Chips (meat point) ---------- */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.chips button {
+  padding: 0.7rem 0.95rem;
+  border-radius: 999px;
+  background: #fff3e0;
+  border: 2px solid transparent;
+  font-weight: 600;
+}
+
+.chips button.active {
+  background: var(--accent-2);
+  border-color: #f9a825;
+}
+
+/* ---------- Toppings ---------- */
+.group + .group {
+  margin-top: 0.9rem;
+}
+
+.group h3 {
+  margin: 0 0 0.55rem;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+
+.topping-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.55rem;
+}
+
+.topping-grid button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.6rem 0.3rem;
+  border-radius: 12px;
+  background: #fff8f0;
+  border: 2px solid transparent;
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.15;
+}
+
+.topping-grid button .t-emoji {
+  font-size: 1.4rem;
+}
+
+.topping-grid button.active {
+  background: #fff3cd;
+  border-color: var(--accent-2);
+}
+
+/* ---------- Bottom bar ---------- */
+.bottom-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.7rem 0.85rem calc(0.7rem + env(safe-area-inset-bottom));
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.btn {
+  flex: 1;
+  min-height: 3.1rem;
+  padding: 0.5rem 0.4rem;
+  border-radius: 14px;
+  background: #fff3e0;
+  font-weight: 700;
+  font-size: 0.82rem;
+  line-height: 1.2;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15rem;
+}
+
+.btn.primary {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* ---------- Toast ---------- */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 6.5rem;
+  transform: translateX(-50%);
+  z-index: 40;
+  background: #2d2a26;
+  color: #fff;
+  padding: 0.7rem 1.2rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  box-shadow: var(--shadow);
+}
+
+/* ---------- Responsive ---------- */
+@media (min-width: 520px) {
+  .topping-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 400px) {
+  .topping-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .btn {
+    font-size: 0.72rem;
+  }
+}
