@@ -28,10 +28,20 @@
     <main class="content">
       <section class="card preview-card">
         <h2 data-i18n="previewTitle">Tu burger</h2>
+        <input
+          id="order-name"
+          class="order-name"
+          type="text"
+          maxlength="60"
+          autocomplete="off"
+          placeholder="Ej: Pepe order"
+          aria-label="Nombre del pedido"
+        />
         <div class="preview-wrap">
           <canvas id="burger-canvas" width="480" height="560"></canvas>
         </div>
         <p id="summary" class="summary"></p>
+        <p id="order-date" class="order-date" hidden></p>
       </section>
 
       <section class="card">

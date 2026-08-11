@@ -8,6 +8,8 @@ export const DEFAULT_STATE = {
   patties: 1,
   meatPoint: 'alPunto',
   toppings: [],
+  name: '',
+  updatedAt: null,
   language: 'es',
 };
 
@@ -26,6 +28,9 @@ export function normalizeState(raw) {
     state.grilledBread = false;
   }
   state.toppings = Array.isArray(state.toppings) ? state.toppings.filter((t) => typeof t === 'string') : [];
+  state.name = typeof state.name === 'string' ? state.name.slice(0, 60) : '';
+  state.updatedAt =
+    typeof state.updatedAt === 'string' && !Number.isNaN(Date.parse(state.updatedAt)) ? state.updatedAt : null;
   state.language = state.language === 'en' ? 'en' : 'es';
   return state;
 }

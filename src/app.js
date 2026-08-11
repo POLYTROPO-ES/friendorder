@@ -31,6 +31,8 @@ export function initApp() {
   const toppingsEl = $('topping-groups');
   const importFile = $('import-file');
   const toastEl = $('toast');
+  const nameInput = $('order-name');
+  const orderDateEl = $('order-date');
 
   const toppingById = new Map(toppings.map((t) => [t.id, t]));
 
@@ -45,7 +47,36 @@ export function initApp() {
   }
 
   function persist() {
+    state.updatedAt = new Date().toISOString();
     saveState(state);
+  }
+
+  function formatDate(iso) {
+    const date = new Date(iso);
+    if (Number.isNaN(date.getTime())) {
+      return '';
+    }
+    return date.toLocaleDateString(state.language === 'es' ? 'es-ES' : 'en-GB', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    });
+  }
+
+  function renderName() {
+    if (nameInput && document.activeElement !== nameInput) {
+      nameInput.value = state.name;
+    }
+  }
+
+  function renderDate() {
+    if (!orderDateEl) return;
+    if (!state.updatedAt) {
+      orderDateEl.hidden = true;
+      return;
+    }
+    orderDateEl.hidden = false;
+    orderDateEl.textContent = `${i18n.t('orderDate')}: ${formatDate(state.updatedAt)}`;
   }
 
   function renderBread() {
@@ -163,10 +194,16 @@ export function initApp() {
     document.querySelectorAll('[data-i18n]').forEach((el) => {
       el.textContent = i18n.t(el.dataset.i18n);
     });
+    if (nameInput) {
+      nameInput.placeholder = i18n.t('orderNamePlaceholder');
+      nameInput.setAttribute('aria-label', i18n.t('orderName'));
+    }
   }
 
   function renderAll() {
     applyStaticTexts();
+    renderName();
+    renderDate();
     renderBread();
     renderPatties();
     renderMeat();
@@ -183,11 +220,28 @@ export function initApp() {
   }
 
   function shareSummary() {
-    return `${i18n.dict.shareIntro} ${buildSummaryParts().join(', ')}. ${i18n.dict.madeWith}: ${buildShareUrl(state)}`;
+    const d = i18n.dict;
+    const parts = [];
+    if (state.name) {
+      parts.push(state.name);
+    }
+    parts.push(`${d.shareIntro} ${buildSummaryParts().join(', ')}.`);
+    parts.push(d.madeWith);
+    if (state.updatedAt) {
+      parts.push(formatDate(state.updatedAt));
+    }
+    return `${parts.join(' · ')} — ${buildShareUrl(state)}`;
   }
 
   // --- events ---
   langToggle.addEventListener('click', () => setLanguage(state.language === 'es' ? 'en' : 'es'));
+
+  nameInput.addEventListener('input', () => {
+    state.name = nameInput.value.slice(0, 60);
+    persist();
+    renderSummary();
+    renderDate();
+  });
 
   grillToggle.addEventListener('change', () => {
     state.grilledBread = grillToggle.checked;
@@ -260,5 +314,8 @@ export function initApp() {
   });
 
   // --- boot ---
+  if (!state.updatedAt) {
+    state.updatedAt = new Date().toISOString();
+  }
   renderAll();
 }
