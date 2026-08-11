@@ -358,12 +358,27 @@ button {
   }
 }
 
-/* ---------- Desktop: tighter vertical rhythm ---------- */
+/* ---------- Desktop: two columns (burger left, options right) ---------- */
 @media (min-width: 900px) {
   .content {
-    gap: 0.65rem;
+    grid-template-columns: 380px 1fr;
+    gap: 0.85rem;
+    align-items: start;
+    max-width: 1080px;
     padding-top: 1.25rem;
     padding-bottom: 1.5rem;
+  }
+
+  .preview-card {
+    grid-column: 1;
+    grid-row: 1 / -1;
+    position: sticky;
+    top: 5.25rem;
+    align-self: start;
+  }
+
+  .preview-card h2 {
+    text-align: left;
   }
 
   .card {
@@ -384,7 +399,7 @@ button {
   }
 
   .preview-wrap canvas {
-    max-height: 430px;
+    max-height: 480px;
     width: auto;
   }
 

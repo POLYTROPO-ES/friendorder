@@ -2,7 +2,7 @@
 
 FriendOrder uses **Cloudflare Access (Zero Trust)** for login and **Cloudflare D1** as the user database.
 
-> **Status: on hold.** The auth backend is present in this repo but **not active** yet. The app currently runs fully local (no login). To enable authentication later, complete Parts A–I below and wire the frontend to `/api/me`.
+> **Status: on hold.** The auth backend is present in this repo but **not active** yet. The app currently runs fully local (no login). The D1 binding is intentionally removed from `wrangler.toml` (it caused deploy errors while no database exists) — Part E re-adds it. To enable authentication later, complete Parts A–I below and wire the frontend to `/api/me`.
 
 - **Login**: any Google account (managed by Cloudflare Access — no auth code to maintain).
 - **User id**: the email address.
