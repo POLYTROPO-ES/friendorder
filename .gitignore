@@ -20,6 +20,10 @@ coverage/
 !.env.example
 .dev.vars
 
+# Secrets - never commit
+secrets.txt
+client_secret_*.json
+
 # IDE and editor files
 .vscode/
 .idea/

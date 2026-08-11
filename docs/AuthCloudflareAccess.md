@@ -2,6 +2,8 @@
 
 FriendOrder uses **Cloudflare Access (Zero Trust)** for login and **Cloudflare D1** as the user database.
 
+> **Status: on hold.** The auth backend is present in this repo but **not active** yet. The app currently runs fully local (no login). To enable authentication later, complete Parts A–I below and wire the frontend to `/api/me`.
+
 - **Login**: any Google account (managed by Cloudflare Access — no auth code to maintain).
 - **User id**: the email address.
 - **Roles**: `admin` or `user`. New users get `user` by default. Admins manage roles from the in-app **Members** panel.
@@ -36,6 +38,8 @@ User ──► Cloudflare Access ──► Google login ──► Pages (Functio
    - **Authorized JavaScript origins**: `https://<your-team-name>.cloudflareaccess.com`
    - **Authorized redirect URIs**: `https://<your-team-name>.cloudflareaccess.com/cdn-cgi/access/callback`
    - Create and copy the **Client ID** and **Client secret**.
+
+> ⚠️ Never commit the client secret. Store it in your password manager or Cloudflare dashboard only.
 
 ## Part C — Add Google as an identity provider in Cloudflare
 
