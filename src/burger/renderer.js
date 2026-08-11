@@ -129,6 +129,44 @@ function drawPlate(ctx) {
   ctx.stroke();
 }
 
+function drawPepperGlyph(ctx, x, y, color) {
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  ctx.moveTo(x, y - 11);
+  ctx.bezierCurveTo(x + 11, y - 11, x + 11, y + 2, x + 6, y + 10);
+  ctx.quadraticCurveTo(x + 3, y + 13, x, y + 9);
+  ctx.quadraticCurveTo(x - 3, y + 13, x - 6, y + 10);
+  ctx.bezierCurveTo(x - 11, y + 2, x - 11, y - 11, x, y - 11);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(0,0,0,0.2)';
+  ctx.lineWidth = 1;
+  ctx.stroke();
+  // stem
+  ctx.fillStyle = '#558b2f';
+  ctx.beginPath();
+  ctx.ellipse(x, y - 15, 3, 5, 0, 0, Math.PI * 2);
+  ctx.fill();
+}
+
+function drawCourgetteGlyph(ctx, x, y) {
+  // griddled courgette slice: green ring, pale flesh, small seeds
+  ctx.fillStyle = '#5d8a3c';
+  ctx.beginPath();
+  ctx.arc(x, y, 11, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.fillStyle = '#eaf2d8';
+  ctx.beginPath();
+  ctx.arc(x, y, 7, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.fillStyle = '#a5c882';
+  [[-3, 0], [3, 0], [0, -3], [0, 3]].forEach(([dx, dy]) => {
+    ctx.beginPath();
+    ctx.arc(x + dx, y + dy, 1.6, 0, Math.PI * 2);
+    ctx.fill();
+  });
+}
+
 function drawToppingGlyph(ctx, topping, x, y) {
   if (topping.id === 'bacon' || topping.id === 'panceta') {
     const w = 30;
@@ -157,6 +195,18 @@ function drawToppingGlyph(ctx, topping, x, y) {
       ctx.lineTo(x + w / 2 - 5, y);
       ctx.stroke();
     }
+    return;
+  }
+  if (
+    topping.id === 'pimientosVerdes' ||
+    topping.id === 'pimientoVerdePlancha' ||
+    topping.id === 'pimientoRojo'
+  ) {
+    drawPepperGlyph(ctx, x, y, topping.color);
+    return;
+  }
+  if (topping.id === 'calabacinPlancha') {
+    drawCourgetteGlyph(ctx, x, y);
     return;
   }
   ctx.fillText(topping.emoji, x, y);
