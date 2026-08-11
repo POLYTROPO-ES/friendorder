@@ -17,6 +17,7 @@
       <h1 class="brand" data-i18n="brand">🍔 FriendOrder</h1>
       <div class="topbar-actions">
         <button id="lang-toggle" class="pill" type="button" aria-label="Switch language">EN</button>
+        <button id="btn-help" class="pill" type="button" aria-label="Ayuda">❓</button>
         <div class="menu">
           <button id="menu-toggle" class="pill" type="button" aria-haspopup="true" aria-expanded="false">⋯</button>
           <div id="menu-pop" class="menu-pop" hidden>
@@ -87,6 +88,34 @@
       <button id="btn-telegram" class="btn" type="button">✈️ <span data-i18n="telegram">Telegram</span></button>
       <button id="btn-copy" class="btn" type="button">🔗 <span data-i18n="copyLink">Copiar enlace</span></button>
     </footer>
+
+    <dialog id="help-dialog" class="help-dialog">
+      <div class="help-head">
+        <h2 data-i18n="helpTitle">Ayuda</h2>
+        <button id="help-close" class="pill" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="help-body">
+        <section>
+          <h3 data-i18n="helpUseTitle">Cómo usar</h3>
+          <p data-i18n="helpUseText"></p>
+        </section>
+        <section>
+          <h3 data-i18n="helpShareTitle">Compartir</h3>
+          <p data-i18n="helpShareText"></p>
+        </section>
+        <section>
+          <h3 data-i18n="helpDownloadTitle">Descargar imagen</h3>
+          <p data-i18n="helpDownloadText"></p>
+        </section>
+        <section>
+          <h3 data-i18n="helpSaveTitle">Guardado</h3>
+          <p data-i18n="helpSaveText"></p>
+        </section>
+        <section>
+          <a id="help-github" class="help-github" href="https://github.com/POLYTROPO-ES/friendorder" target="_blank" rel="noopener" data-i18n="helpGithub">🐙 Ver el código en GitHub</a>
+        </section>
+      </div>
+    </dialog>
 
     <dialog id="serve-conflict" class="conflict-dialog">
       <p id="conflict-message"></p>

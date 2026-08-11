@@ -58,6 +58,8 @@ export function initApp() {
   const conflictMessage = $('conflict-message');
   const conflictInsideBtn = $('conflict-inside');
   const conflictKeepBtn = $('conflict-keep');
+  const helpDialog = $('help-dialog');
+  const helpClose = $('help-close');
 
   const toppingById = new Map(toppings.map((t) => [t.id, t]));
 
@@ -377,6 +379,13 @@ export function initApp() {
   });
   conflictDialog.addEventListener('cancel', () => {
     renderAll();
+  });
+
+  $('btn-help').addEventListener('click', () => {
+    helpDialog.showModal();
+  });
+  helpClose.addEventListener('click', () => {
+    helpDialog.close();
   });
 
   $('btn-download').addEventListener('click', () => {

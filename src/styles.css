@@ -433,6 +433,75 @@ button {
   min-height: 2.8rem;
 }
 
+.help-dialog {
+  border: none;
+  border-radius: 16px;
+  padding: 0;
+  max-width: 480px;
+  width: calc(100vw - 2rem);
+  max-height: 80vh;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.help-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.help-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem 1.1rem;
+  background: var(--accent);
+  color: #fff;
+}
+
+.help-head h2 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.help-head .pill {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: transparent;
+  color: #fff;
+}
+
+.help-body {
+  padding: 1rem 1.1rem 1.2rem;
+  max-height: calc(80vh - 3.5rem);
+  overflow-y: auto;
+  text-align: left;
+}
+
+.help-body section + section {
+  margin-top: 0.9rem;
+}
+
+.help-body h3 {
+  margin: 0 0 0.25rem;
+  font-size: 0.95rem;
+  color: var(--accent);
+}
+
+.help-body p {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.help-github {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.2rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+}
+
 /* ---------- Responsive ---------- */
 @media (min-width: 520px) {
   .topping-grid {
