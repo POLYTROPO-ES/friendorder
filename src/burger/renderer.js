@@ -118,7 +118,7 @@ function drawSauces(ctx, sauces) {
   ctx.lineWidth = 7;
   ctx.lineCap = 'round';
   sauces.forEach((sauce, i) => {
-    const y = 282 + (i % 2) * 9;
+    const y = 286 + (i % 2) * 9;
     ctx.strokeStyle = sauce.color;
     ctx.beginPath();
     ctx.moveTo(CX - 130, y);
@@ -128,31 +128,25 @@ function drawSauces(ctx, sauces) {
   });
 }
 
-function drawVeggies(ctx, veggies) {
-  const step = Math.max(28, 150 / Math.max(1, veggies.length));
-  const startX = CX - (step * (veggies.length - 1)) / 2;
-  veggies.forEach((veggie, i) => {
-    const x = startX + i * step;
-    const y = 252 + (i % 2) * 14;
-    ctx.fillStyle = veggie.color;
-    ctx.beginPath();
-    ctx.arc(x, y, 13, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.strokeStyle = 'rgba(255,255,255,0.65)';
-    ctx.lineWidth = 2;
-    ctx.stroke();
+function drawToppingIcons(ctx, toppings) {
+  const many = toppings.length > 10;
+  const fontSize = many ? 24 : 30;
+  const step = many ? 32 : 40;
+  const maxPerRow = Math.max(1, Math.floor(310 / step));
+  ctx.font = `${fontSize}px "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  const rows = [];
+  for (let i = 0; i < toppings.length; i += maxPerRow) {
+    rows.push(toppings.slice(i, i + maxPerRow));
+  }
+  const baseY = rows.length > 1 ? 230 : 246;
+  rows.forEach((row, ri) => {
+    const startX = CX - (step * (row.length - 1)) / 2;
+    row.forEach((topping, i) => {
+      ctx.fillText(topping.emoji, startX + i * step, baseY + ri * (fontSize + 10));
+    });
   });
-}
-
-function drawEgg(ctx, x, y) {
-  ctx.fillStyle = '#ffffff';
-  ctx.beginPath();
-  ctx.ellipse(x, y, 21, 14, 0, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.fillStyle = '#f9a825';
-  ctx.beginPath();
-  ctx.arc(x, y, 7, 0, Math.PI * 2);
-  ctx.fill();
 }
 
 function drawLettuceWrap(ctx) {
@@ -217,9 +211,8 @@ export function renderBurger(canvas, state, toppings) {
   const hasBread = state.bread !== 'none';
   const selected = toppings.filter((t) => state.toppings.includes(t.id));
   const cheeses = selected.filter((t) => t.id === 'dobleQueso' || t.id === 'tripleQueso');
-  const eggs = selected.filter((t) => t.id === 'huevoPlancha' || t.id === 'huevoFrito');
   const sauces = selected.filter((t) => t.category === 'sauce');
-  const veggies = selected.filter((t) => t.category === 'veggie');
+  const iconToppings = selected.filter((t) => t.category !== 'sauce');
 
   if (hasBread) {
     drawBottomBun(ctx, state.bread);
@@ -235,12 +228,8 @@ export function renderBurger(canvas, state, toppings) {
     drawSauces(ctx, sauces);
   }
 
-  if (veggies.length > 0) {
-    drawVeggies(ctx, veggies);
-  }
-
-  if (eggs.length > 0) {
-    eggs.forEach((egg, i) => drawEgg(ctx, CX - 66 + i * 66, 238));
+  if (iconToppings.length > 0) {
+    drawToppingIcons(ctx, iconToppings);
   }
 
   if (hasBread) {

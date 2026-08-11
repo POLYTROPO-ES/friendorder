@@ -358,6 +358,45 @@ button {
   }
 }
 
+/* ---------- Desktop: tighter vertical rhythm ---------- */
+@media (min-width: 900px) {
+  .content {
+    gap: 0.65rem;
+    padding-top: 1.25rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .card {
+    padding: 0.9rem 1.1rem;
+  }
+
+  .card h2 {
+    margin-bottom: 0.6rem;
+    font-size: 0.92rem;
+  }
+
+  .group + .group {
+    margin-top: 0.6rem;
+  }
+
+  .grill-wrap {
+    margin-top: 0.6rem;
+  }
+
+  .preview-wrap canvas {
+    max-height: 430px;
+    width: auto;
+  }
+
+  .bottom-bar {
+    max-width: 640px;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    border-radius: 18px 18px 0 0;
+  }
+}
+
 @media (max-width: 400px) {
   .topping-grid {
     grid-template-columns: repeat(2, 1fr);
