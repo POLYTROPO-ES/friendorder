@@ -40,6 +40,7 @@ export function initApp() {
   const conflictMessage = $('conflict-message');
   const conflictInsideBtn = $('conflict-inside');
   const conflictKeepBtn = $('conflict-keep');
+  const confirmResetDialog = $('confirm-reset');
   const helpDialog = $('help-dialog');
   const helpClose = $('help-close');
 
@@ -397,13 +398,31 @@ export function initApp() {
     );
   });
 
-  $('btn-copy').addEventListener('click', async () => {
+  async function copyText(text) {
     try {
-      await navigator.clipboard.writeText(buildShareUrl(state));
-      toast(i18n.t('copied'));
+      await navigator.clipboard.writeText(text);
+      return true;
     } catch {
-      toast(i18n.t('copied'));
+      // Fallback for non-secure contexts or denied permissions.
+      try {
+        const helper = document.createElement('textarea');
+        helper.value = text;
+        helper.style.position = 'fixed';
+        helper.style.opacity = '0';
+        document.body.appendChild(helper);
+        helper.select();
+        const ok = document.execCommand('copy');
+        helper.remove();
+        return ok;
+      } catch {
+        return false;
+      }
     }
+  }
+
+  $('btn-copy').addEventListener('click', async () => {
+    const ok = await copyText(buildShareUrl(state));
+    toast(ok ? i18n.t('copied') : i18n.t('copyError'));
   });
 
   // --- boot ---
