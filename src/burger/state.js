@@ -48,18 +48,25 @@ export function normalizeState(raw) {
 
 function encode(value) {
   const json = JSON.stringify(value);
-  const base64 = btoa(unescape(encodeURIComponent(json)));
+  const bytes = new TextEncoder().encode(json);
+  let binary = '';
+  bytes.forEach((b) => {
+    binary += String.fromCharCode(b);
+  });
+  const base64 = btoa(binary);
   return base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 }
 
 function decode(value) {
   const base64 = value.replace(/-/g, '+').replace(/_/g, '/');
   const padded = base64 + '='.repeat((4 - (base64.length % 4)) % 4);
-  return JSON.parse(decodeURIComponent(escape(atob(padded))));
+  const binary = atob(padded);
+  const bytes = Uint8Array.from(binary, (c) => c.charCodeAt(0));
+  return JSON.parse(new TextDecoder().decode(bytes));
 }
 
 export function encodeShareConfig(state) {
-  const { language, ...config } = state;
+  const { language, updatedAt, ...config } = state;
   return encode(config);
 }
 

@@ -84,10 +84,13 @@ describe('share encoding', () => {
     expect(decodeShareConfig(null)).toBeNull();
   });
 
-  it('strips language from the shared config', () => {
-    const token = encodeShareConfig(normalizeState({ language: 'en' }));
+  it('strips language and updatedAt from the shared config', () => {
+    const token = encodeShareConfig(
+      normalizeState({ language: 'en', updatedAt: '2026-08-12T00:00:00.000Z' })
+    );
     const decoded = decodeShareConfig(token);
     expect(decoded).not.toHaveProperty('language');
+    expect(decoded).not.toHaveProperty('updatedAt');
   });
 
   it('builds a share URL with the encoded config', () => {
