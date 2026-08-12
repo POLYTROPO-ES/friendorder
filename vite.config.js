@@ -5,7 +5,7 @@ const PERMISSIONS_POLICY = 'browsing-topics=(), join-ad-interest-group=(), run-a
 export default defineConfig({
   server: {
     port: 5173,
-    open: true,
+    open: false,
     headers: {
       'Permissions-Policy': PERMISSIONS_POLICY,
     },
