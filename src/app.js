@@ -10,26 +10,7 @@ import {
 } from './burger/state.js';
 import { saveState, loadState, clearState, exportState, readImportedState } from './store.js';
 import { renderBurger, downloadPng } from './burger/renderer.js';
-
-function toppingGlyphSvg(topping) {
-  const color = topping.color || '#888';
-  switch (topping.id) {
-    case 'bacon':
-      return `<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="4" fill="#c62828"/><rect x="6" y="9" width="12" height="2" rx="1" fill="rgba(255,255,255,0.75)"/><rect x="6" y="14" width="12" height="2" rx="1" fill="rgba(255,255,255,0.75)"/></svg>`;
-    case 'panceta':
-      return `<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="4" fill="#f7e8d8" stroke="rgba(0,0,0,0.3)"/><rect x="6" y="11" width="12" height="2" rx="1" fill="rgba(190,30,30,0.7)"/></svg>`;
-    case 'pimientosVerdes':
-    case 'pimientoVerdePlancha':
-    case 'pimientoRojo':
-      return `<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M12 2c5 0 6.5 4 4.5 7l-1.5 7.5c-.8 1.8-5.7 1.8-6.5 0L7 9C5 6 6.5 2 12 2z" fill="${color}"/><rect x="11" y="0" width="2" height="5" rx="1" fill="#558b2f"/></svg>`;
-    case 'calabacinPlancha':
-      return `<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="#5d8a3c"/><circle cx="12" cy="12" r="6" fill="#eaf2d8"/><circle cx="10" cy="10" r="1.4" fill="#a5c882"/><circle cx="14" cy="12" r="1.4" fill="#a5c882"/><circle cx="12" cy="15" r="1.4" fill="#a5c882"/></svg>`;
-    case 'queson':
-      return `<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M3 15 L10 3 L21 8 L17 16 Z" fill="#ffca28" stroke="rgba(0,0,0,0.2)"/><circle cx="10" cy="11" r="1.6" fill="#f5a800"/><circle cx="15" cy="10" r="1.6" fill="#f5a800"/></svg>`;
-    default:
-      return null;
-  }
-}
+import { glyphSvg } from './burger/glyphs.js';
 
 export function initApp() {
   const urlConfig = decodeShareConfig(new URLSearchParams(window.location.search).get('c'));
@@ -167,7 +148,7 @@ export function initApp() {
         const chips = items
           .map((t) => {
             const active = state.toppings.includes(t.id);
-            const glyph = toppingGlyphSvg(t);
+            const glyph = glyphSvg(t.id, t.color);
             const iconHtml = glyph
               ? `<span class="t-emoji">${glyph}</span>`
               : `<span class="t-emoji">${t.emoji}</span>`;
