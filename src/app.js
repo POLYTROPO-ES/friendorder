@@ -337,22 +337,31 @@ export function initApp() {
       toast(i18n.t('importError'));
     }
   });
-  function resetAll() {
-    if (!window.confirm(i18n.t('confirmDelete'))) return;
+  function doReset() {
     clearState();
     Object.assign(state, normalizeState(DEFAULT_STATE));
     i18n = createI18n(state.language);
+    persist();
     renderAll();
     toast(i18n.t('deleted'));
   }
 
   $('action-delete').addEventListener('click', () => {
     menuPop.hidden = true;
-    resetAll();
+    confirmResetDialog.showModal();
   });
 
   $('btn-fresh-start').addEventListener('click', () => {
-    resetAll();
+    confirmResetDialog.showModal();
+  });
+
+  $('confirm-reset-yes').addEventListener('click', () => {
+    confirmResetDialog.close();
+    doReset();
+  });
+
+  $('confirm-reset-no').addEventListener('click', () => {
+    confirmResetDialog.close();
   });
 
   conflictInsideBtn.addEventListener('click', () => {
