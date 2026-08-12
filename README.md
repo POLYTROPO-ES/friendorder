@@ -19,6 +19,8 @@ FriendOrder is a **burger configurator** to help a friend build the menu for a d
    `npm run build`
 4. Preview the production build:
    `npm run preview`
+5. Run the tests:
+   `npm run test:run` (unit) and `npm run test:e2e` (Playwright smoke tests)
 
 ## Editing the toppings list
 
@@ -43,13 +45,15 @@ All toppings live in [`src/data/toppings.json`](src/data/toppings.json). Each it
 - `npm run dev`: start the Vite dev server
 - `npm run build`: production build to `dist/`
 - `npm run preview`: preview the built app
-- `npm run dev:cf`: full-stack local dev (Pages + Functions + local D1) on port 8788
-- `npm run db:migrate`: apply DB migrations to the remote D1 database
-- `npm run db:migrate:local`: apply DB migrations to the local D1 database
+- `npm run test:run`: run the Vitest unit tests
+- `npm run test:e2e`: run the Playwright E2E smoke tests (auto-starts the dev server)
 - `npm run deploy:cf`: build and deploy to Cloudflare Pages (project `friendorder`)
-- `npm run deploy:worker`: build and deploy as a Cloudflare Worker with static assets
 - `npm run docker:build`: build the Docker image (nginx)
 - `npm run docker:run`: run the container on port 8080
+- `npm run dev:cf`: _(on hold)_ full-stack local dev (Pages + Functions + local D1) on port 8788 — auth backend is not active
+- `npm run db:migrate`: _(on hold)_ apply DB migrations to the remote D1 database — no D1 binding configured
+- `npm run db:migrate:local`: _(on hold)_ apply DB migrations to the local D1 database
+- `npm run deploy:worker`: _(on hold)_ build and deploy as a Cloudflare Worker with static assets
 
 ## Deployment (Cloudflare)
 

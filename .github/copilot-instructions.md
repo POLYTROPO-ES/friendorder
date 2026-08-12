@@ -3,7 +3,7 @@
 Specialized agent configuration for the **FriendOrder** project. Follow these rules whenever working in this repository.
 
 ## What this app is
-FriendOrder is a **smartphone-first, bright-UI burger configurator PWA** (Vanilla JS + Vite) that helps build the menu of a dinner (or any meal). The user picks bread, patties, meat point and toppings; the app renders a **canvas image of the burger** and lets them **share** it (WhatsApp / Telegram / download PNG / copy share link). It is **ES/EN bilingual** and persisted in **localStorage**.
+FriendOrder is a **smartphone-first, bright-UI burger configurator PWA** (Vanilla JS + Vite) that helps build the menu of a dinner (or any meal in the future). The user picks bread, patties, meat point and toppings; the app renders a **canvas image of the burger** and lets them **share** it (WhatsApp / Telegram / download PNG / copy share link). It is **ES/EN bilingual** and persisted in **localStorage**.
 
 ## Tech stack
 - **Vite 6** vanilla JS SPA — `index.html` + `src/main.js` → `src/app.js`
@@ -17,6 +17,7 @@ FriendOrder is a **smartphone-first, bright-UI burger configurator PWA** (Vanill
 | --- | --- |
 | `src/app.js` | All UI logic, state, render functions + event listeners |
 | `src/burger/state.js` | `DEFAULT_STATE`, `normalizeState`, `MEAT_POINTS`, `BREAD_OPTIONS`, share encode/decode (`buildShareUrl`) |
+| `src/burger/glyphs.js` | Single source of truth for custom topping glyphs: `glyphSvg()` (UI chips) + `drawGlyph()` (canvas) |
 | `src/burger/renderer.js` | Canvas burger drawing (plate, buns, grill marks, patties, cheese layers, topping glyphs, icons, aside piles) + `downloadPng` |
 | `src/data/toppings.json` | Single source of truth for toppings: `{id, name:{es,en}, category: veggie\|extra\|sauce, emoji, color}` |
 | `src/i18n.js` | ES/EN dictionaries, `createI18n(language)` |
@@ -31,7 +32,7 @@ FriendOrder is a **smartphone-first, bright-UI burger configurator PWA** (Vanill
   name, updatedAt, language: es|en }
 ```
 - `updatedAt` is stamped on every `persist()`.
-- Share link `?c=` = base64url-encoded config (language stripped).
+- Share link `?c=` = base64url-encoded config (TextEncoder-based; `language` and `updatedAt` stripped).
 - Meat points: `pocoHecho | alPunto | hecho | muyHecho | especialCasa` (no `crudo`).
 - Cheese naming is dynamic: Queso / Queso x2 / Queso x3 (rendered as matching melted layers).
 
@@ -48,8 +49,9 @@ FriendOrder is a **smartphone-first, bright-UI burger configurator PWA** (Vanill
 ## Workflow
 - Dev server: `npm run dev` (Vite, port 5173)
 - Build: `npm run build` — always run before committing UI changes
-- Unit tests: `npm run test:run` (Vitest)
-- E2E: `npm run test:e2e` (Playwright)
+- Unit tests: `npm run test:run` (Vitest — `src/burger/state.test.js`)
+- E2E: `npm run test:e2e` (Playwright — `tests/e2e/main.spec.js`, config `playwright.config.js` auto-starts Vite)
+- CI: `.github/workflows/ci.yml` runs unit tests, build and E2E on push/PR
 - Deploy: push to `main` → Cloudflare Pages auto-deploy; manual: `npm run deploy:cf`
 - Icons: `npm run icons` (regenerates PNG favicons from `public/favicon.svg` via sharp)
 
