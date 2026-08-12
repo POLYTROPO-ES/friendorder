@@ -50,7 +50,6 @@ const dictionaries = {
     grilled: 'tostado',
     breadOptions: { none: 'Ninguno', normal: 'Normal', glutenFree: 'Sin gluten' },
     meatOptions: {
-      crudo: 'Crudo',
       pocoHecho: 'Poco hecho',
       alPunto: 'Al punto',
       hecho: 'Hecho',
@@ -111,7 +110,6 @@ const dictionaries = {
     grilled: 'toasted',
     breadOptions: { none: 'None', normal: 'Normal', glutenFree: 'Gluten-free' },
     meatOptions: {
-      crudo: 'Raw',
       pocoHecho: 'Rare',
       alPunto: 'Medium',
       hecho: 'Medium well',
