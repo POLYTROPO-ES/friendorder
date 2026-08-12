@@ -11,6 +11,7 @@ import {
 import { saveState, loadState, clearState, exportState, readImportedState } from './store.js';
 import { renderBurger, downloadPng } from './burger/renderer.js';
 import { glyphSvg } from './burger/glyphs.js';
+import { VERSION_INFO } from './generated/version.js';
 
 export function initApp() {
   const urlConfig = decodeShareConfig(new URLSearchParams(window.location.search).get('c'));
@@ -406,6 +407,10 @@ export function initApp() {
   });
 
   // --- boot ---
+  const versionEl = $('app-version');
+  if (versionEl) {
+    versionEl.textContent = VERSION_INFO.displayVersion;
+  }
   if (!state.updatedAt) {
     state.updatedAt = new Date().toISOString();
   }

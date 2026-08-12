@@ -502,6 +502,13 @@ button {
   text-decoration: none;
 }
 
+.help-version {
+  margin: 1rem 0 0;
+  font-size: 0.75rem;
+  opacity: 0.55;
+  text-align: center;
+}
+
 .fresh-start {
   display: flex;
   align-items: center;
