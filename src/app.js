@@ -110,9 +110,9 @@ export function initApp() {
 
   function renderPatties() {
     pattyEl.innerHTML = `
-      <button type="button" id="patty-minus" aria-label="-" ${state.patties <= 1 ? 'disabled' : ''}>−</button>
+      <button type="button" id="patty-minus" aria-label="${i18n.dict.pattyMinus}" ${state.patties <= 1 ? 'disabled' : ''}>−</button>
       <div class="value">${state.patties}<small>${i18n.dict.pattyCount[state.patties]}</small></div>
-      <button type="button" id="patty-plus" aria-label="+" ${state.patties >= 4 ? 'disabled' : ''}>+</button>
+      <button type="button" id="patty-plus" aria-label="${i18n.dict.pattyPlus}" ${state.patties >= 4 ? 'disabled' : ''}>+</button>
     `;
     $('patty-minus').addEventListener('click', () => {
       state.patties = Math.max(1, state.patties - 1);
@@ -159,7 +159,7 @@ export function initApp() {
           .join('');
         const effective = forced ? 'aside' : state.serve[category];
         const head = `<div class="group-head"><h3>${i18n.dict.categoryOptions[category]}</h3>
-            <select data-serve-cat="${category}" class="serve-select" aria-label="${i18n.t('serveTitle')}">
+            <select data-serve-cat="${category}" class="serve-select" aria-label="${i18n.t('serveTitle')}: ${i18n.dict.categoryOptions[category]}">
               <option value="inside" ${effective === 'inside' ? 'selected' : ''}>${i18n.dict.serveInside}</option>
               <option value="aside" ${effective === 'aside' ? 'selected' : ''}>${i18n.dict.serveAside}</option>
             </select>

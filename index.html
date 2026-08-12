@@ -91,9 +91,9 @@
       <button id="btn-copy" class="btn" type="button">🔗 <span data-i18n="copyLink">Copiar enlace</span></button>
     </footer>
 
-    <dialog id="help-dialog" class="help-dialog">
+    <dialog id="help-dialog" class="help-dialog" aria-labelledby="help-title">
       <div class="help-head">
-        <h2 data-i18n="helpTitle">Ayuda</h2>
+        <h2 id="help-title" data-i18n="helpTitle">Ayuda</h2>
         <button id="help-close" class="pill" type="button" aria-label="Cerrar">✕</button>
       </div>
       <div class="help-body">
@@ -128,7 +128,7 @@
       </div>
     </dialog>
 
-    <dialog id="serve-conflict" class="conflict-dialog">
+    <dialog id="serve-conflict" class="conflict-dialog" aria-labelledby="conflict-message">
       <p id="conflict-message"></p>
       <div class="conflict-actions">
         <button id="conflict-inside" class="btn primary" type="button"></button>
