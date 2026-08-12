@@ -165,11 +165,12 @@ function drawToppingsAside(ctx, toppings) {
   const half = Math.ceil(toppings.length / 2);
   const left = toppings.slice(0, half);
   const right = toppings.slice(half);
-  const spacing = fontSize + 8;
   const maxLen = Math.max(left.length, right.length, 1);
+  // Shrink spacing when the pile would not fit vertically (e.g. 30 toppings aside).
+  const spacing = Math.min(fontSize + 8, (H - 16 - 140) / Math.max(maxLen - 1, 1));
   const startY = 480 - ((maxLen - 1) * spacing) / 2;
-  // Keep the whole pile inside the canvas (bottom edge at 560, glyph half-height margin).
-  const overflow = startY + (maxLen - 1) * spacing - 552;
+  // Keep the whole pile inside the canvas, including the glyph half-height (16px margin).
+  const overflow = startY + (maxLen - 1) * spacing - (H - 16);
   const clampedStartY = overflow > 0 ? Math.max(140, startY - overflow) : startY;
   [[left, 100], [right, 380]].forEach(([group, x]) => {
     group.forEach((topping, i) => {
